@@ -243,6 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9239d824dea9bea4b9bc5ed4e1a58de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <WeaponDamage>k__BackingField: 5
 --- !u!1 &165667809
 GameObject:
   m_ObjectHideFlags: 0

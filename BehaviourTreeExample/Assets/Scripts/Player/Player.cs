@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         
     }
 
-    public void TakeDamage(GameObject attacker, int damage)
+    public void TakeDamage(GameObject attacker, float damage)
     {
         animator.enabled = false;
         var cols = GetComponentsInChildren<Collider>();

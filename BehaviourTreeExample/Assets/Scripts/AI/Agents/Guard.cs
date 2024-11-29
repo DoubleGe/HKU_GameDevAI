@@ -36,8 +36,9 @@ public class Guard : MonoBehaviour
                     new BTSelector(
                         new BTConditional(
                             new BTSequence(
-                                new BTLog("Going to player"),
-                                new BTMoveToPosition(agent, moveSpeed, VariableNames.PLAYER_POSITION, keepDistance)
+                                new BTMoveToPosition(agent, moveSpeed, VariableNames.PLAYER_POSITION, keepDistance),
+                                new BTWait(2),
+                                new BTAttack(transform, blackboard.GetVariable<Weapon>(VariableNames.WEAPON_STORAGE))
                         ), () => blackboard.ContainsValue<Weapon>(VariableNames.WEAPON_STORAGE)),
 
                         new BTSequence(

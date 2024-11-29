@@ -44,7 +44,6 @@ public class BTSearchType<T> : BTBaseNode where T : MonoBehaviour
     {
         if (nearbyType != null)
         {
-            Debug.Log("Found: " + nearbyType.name);
             blackboard.SetVariable<T>("FoundType", nearbyType);
             blackboard.SetVariable<Vector3>(BBtargetPosition, nearbyType.transform.position);
             return TaskStatus.Success;
