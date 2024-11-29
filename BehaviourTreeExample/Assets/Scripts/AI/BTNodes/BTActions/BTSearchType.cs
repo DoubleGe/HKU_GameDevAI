@@ -7,14 +7,16 @@ public class BTSearchType<T> : BTBaseNode where T : MonoBehaviour
 {
     private Transform transform;
     private string BBtargetPosition;
+    private string BBTargetTransform;
     private float searchRadius;
 
     private T nearbyType;
 
-    public BTSearchType(Transform transform, string BBtargetPosition, int searchRadius = 5)
+    public BTSearchType(Transform transform, string BBtargetPosition, string BBtargetTransform, int searchRadius = 5)
     {
         this.transform = transform;
         this.BBtargetPosition = BBtargetPosition;
+        this.BBTargetTransform = BBtargetTransform;
         this.searchRadius = searchRadius;
     }
 
@@ -45,6 +47,7 @@ public class BTSearchType<T> : BTBaseNode where T : MonoBehaviour
         if (nearbyType != null)
         {
             blackboard.SetVariable<T>("FoundType", nearbyType);
+            blackboard.SetVariable<Transform>(BBTargetTransform, nearbyType.transform);
             blackboard.SetVariable<Vector3>(BBtargetPosition, nearbyType.transform.position);
             return TaskStatus.Success;
         }

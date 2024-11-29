@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 1696898269}
   rotationSpeed: 360
-  moveSpeed: 3
+  moveSpeed: 4
   deathForce: 1500
   ragdoll: {fileID: 1392164572}
 --- !u!136 &1267729047
