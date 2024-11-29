@@ -5,13 +5,18 @@ using UnityEngine;
 
 public class BTConditional : BTDecorator
 {
-    public BTConditional(Func<bool> condition, BTBaseNode child, BTBaseNode child2) : base(child)
+    private Func<bool> condition;
+
+    public BTConditional(BTBaseNode child, Func<bool> condition) : base(child)
     {
-        
+        this.condition = condition;
     }
 
     protected override TaskStatus OnUpdate()
     {
-        return TaskStatus.Failed;
+        if (condition.Invoke())
+        {
+            return child.Tick();
+        } else return TaskStatus.Failed;
     }
 }

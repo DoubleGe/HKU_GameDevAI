@@ -36,7 +36,7 @@ public class BTMoveToPosition : BTBaseNode
             agent.SetDestination(targetPosition);
         }
 
-        if(Vector3.Distance(agent.transform.position, targetPosition) <= keepDistance)
+        if(Vector3.Distance(agent.transform.position, targetPosition) <= keepDistance + .75f)
         {
             return TaskStatus.Success;
         }

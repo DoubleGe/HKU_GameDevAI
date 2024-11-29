@@ -25,4 +25,9 @@ public class Blackboard
             dictionary.Add(name, variable);
         }
     }
+
+    public bool ContainsValue<T>(string name)
+    {
+        return dictionary.ContainsKey(name);
+    }
 }
