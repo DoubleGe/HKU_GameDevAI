@@ -17,7 +17,18 @@ public class Rogue : MonoBehaviour
 
     private void Start()
     {
-        //TODO: Create your Behaviour tree here
+        //Create your Behaviour Tree here!
+        Blackboard blackboard = new Blackboard();
+        blackboard.SetVariable(VariableNames.ENEMY_HEALTH, 100);
+        blackboard.SetVariable(VariableNames.TARGET_POSITION, new Vector3(0, 0, 0));
+        blackboard.SetVariable(VariableNames.CURRENT_PATROL_INDEX, -1);
+
+        tree =
+            new BTSelector(
+                
+            );
+
+        tree.SetupBlackboard(blackboard);
     }
 
     private void FixedUpdate()
