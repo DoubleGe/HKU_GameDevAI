@@ -5,10 +5,14 @@ using UnityEngine.AI;
 
 public class Rogue : MonoBehaviour
 {
+    [SerializeField] private Player player;
+    [SerializeField] private float moveSpeed = 3;
+    [SerializeField] private float keepDistance = 1f;
 
     private BTBaseNode tree;
     private NavMeshAgent agent;
     private Animator animator;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -25,7 +29,10 @@ public class Rogue : MonoBehaviour
 
         tree =
             new BTSelector(
-                
+                new BTSequence(
+                    new BTGetTargetPosition(player.transform, VariableNames.TARGET_POSITION),
+                    new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance)
+                )
             );
 
         tree.SetupBlackboard(blackboard);

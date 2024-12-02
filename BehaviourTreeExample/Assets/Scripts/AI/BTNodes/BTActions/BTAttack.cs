@@ -21,7 +21,6 @@ public class BTAttack : BTBaseNode
         {
             if (collider.TryGetComponent<Player>(out Player player))
             {
-                Debug.Log(weapon);
                 player.TakeDamage(transform.gameObject, 1);
             }
         }

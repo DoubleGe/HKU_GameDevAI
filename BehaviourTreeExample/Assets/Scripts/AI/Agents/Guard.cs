@@ -23,16 +23,17 @@ public class Guard : MonoBehaviour
 
     private void Start()
     {
-        //Create your Behaviour Tree here!
         Blackboard blackboard = new Blackboard();
         blackboard.SetVariable(VariableNames.ENEMY_HEALTH, 100);
         blackboard.SetVariable(VariableNames.TARGET_POSITION, new Vector3(0, 0, 0));
         blackboard.SetVariable(VariableNames.CURRENT_PATROL_INDEX, -1);
+        blackboard.SetVariable<Transform>(VariableNames.TARGET_TRANSFORM, null);
 
         tree =
             new BTSelector(
                 new BTSequence(
                     new BTSearchType<Player>(transform, VariableNames.PLAYER_POSITION, VariableNames.TARGET_TRANSFORM),
+                    new BTIsInSight(VariableNames.TARGET_TRANSFORM, transform, 130),
                     new BTSelector(
                         new BTConditional(
                             new BTSequence(
@@ -43,17 +44,17 @@ public class Guard : MonoBehaviour
 
                         new BTSequence(
                             new BTSearchType<Weapon>(transform, VariableNames.TARGET_POSITION, VariableNames.TARGET_TRANSFORM),
-                            new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance),
+                            new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance, .75f),
                             new BTPickupWeapon(guardHand, VariableNames.WEAPON_STORAGE)
                         )
                     )
                 ),
 
-            new BTRepeater(wayPoints.Length,
-                new BTSequence(
-                    new BTGetNextPatrolPosition(wayPoints),
-                    new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance)
-                   )
+                new BTRepeater(wayPoints.Length,
+                    new BTSequence(
+                        new BTGetNextPatrolPosition(wayPoints),
+                        new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance)
+                    )
                 )
             );
 

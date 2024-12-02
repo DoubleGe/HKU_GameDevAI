@@ -10,13 +10,15 @@ public class BTMoveToPosition : BTBaseNode
     private float keepDistance;
     private Vector3 targetPosition;
     private string BBtargetPosition;
+    private float offset;
 
-    public BTMoveToPosition(NavMeshAgent agent, float moveSpeed, string BBtargetPosition, float keepDistance)
+    public BTMoveToPosition(NavMeshAgent agent, float moveSpeed, string BBtargetPosition, float keepDistance, float offset = 0)
     {
         this.agent = agent;
         this.moveSpeed = moveSpeed;
         this.BBtargetPosition = BBtargetPosition;
         this.keepDistance = keepDistance;
+        this.offset = offset;
     }
 
     protected override void OnEnter()
@@ -36,7 +38,7 @@ public class BTMoveToPosition : BTBaseNode
             agent.SetDestination(targetPosition);
         }
 
-        if(Vector3.Distance(agent.transform.position, targetPosition) <= keepDistance + .75f)
+        if(Vector3.Distance(agent.transform.position, targetPosition) <= keepDistance + offset)
         {
             return TaskStatus.Success;
         }
