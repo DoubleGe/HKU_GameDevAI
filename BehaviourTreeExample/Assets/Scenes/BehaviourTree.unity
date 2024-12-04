@@ -2489,7 +2489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1840160679
 Transform:
   m_ObjectHideFlags: 0
@@ -2566,7 +2566,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1267729046}
   moveSpeed: 3
-  keepDistance: 3
+  keepDistance: 1
+  playerKeepDistance: 4
 --- !u!1 &1868206819
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,7 +2580,7 @@ GameObject:
   - component: {fileID: 1868206822}
   - component: {fileID: 1868206821}
   - component: {fileID: 1868206820}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

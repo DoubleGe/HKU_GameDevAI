@@ -11,9 +11,9 @@ public class BTRepeatUntil : BTDecorator
 
     protected override TaskStatus OnUpdate()
     {
-        child.Tick();
         if (untilFunc.Invoke())
         {
+            child.Tick();
             return TaskStatus.Running;
         }
         else return TaskStatus.Failed;
