@@ -50,7 +50,7 @@ public class Rogue : MonoBehaviour
                 ),
                 new BTSequence(
                     new BTGetTargetPosition(player.transform, VariableNames.TARGET_POSITION),
-                    new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance)
+                    new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, playerKeepDistance)
                 )
             );
 

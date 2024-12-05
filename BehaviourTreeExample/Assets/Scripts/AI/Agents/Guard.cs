@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Guard : MonoBehaviour
+public class Guard : MonoBehaviour, ISmokeable
 {
     public float moveSpeed = 3;
     public float keepDistance = 1f;
@@ -14,6 +14,9 @@ public class Guard : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private Transform guardHand;
+
+    private bool inSmoke;
+    private float smokeCooldown;
 
     private void Awake()
     {
@@ -31,6 +34,13 @@ public class Guard : MonoBehaviour
 
         tree =
             new BTSelector(
+                new BTConditional(
+                    new BTSequence(
+                        new BTWait(3f),
+                        new BTFunction(() => inSmoke = false),
+                        new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance)
+                ), () => inSmoke),
+
                 new BTSequence(
                     new BTSearchType<Player>(transform, VariableNames.PLAYER_POSITION, VariableNames.TARGET_TRANSFORM),
                     new BTIsInSight(VariableNames.TARGET_TRANSFORM, transform, 130),
@@ -50,19 +60,34 @@ public class Guard : MonoBehaviour
                     )
                 ),
 
-                new BTRepeater(wayPoints.Length,
+                new BTRepeatUntil(
+                    //new BTRepeater(wayPoints.Length,
                     new BTSequence(
                         new BTGetNextPatrolPosition(wayPoints),
                         new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance)
                     )
-                )
+                , () => !inSmoke)
             );
 
         tree.SetupBlackboard(blackboard);
     }
 
+    private void Update()
+    {
+        smokeCooldown = Mathf.Clamp(smokeCooldown - Time.deltaTime, 0, 10);
+    }
+
     private void FixedUpdate()
     {
         TaskStatus result = tree.Tick();
+    }
+
+    public void SmokeTarget()
+    { 
+        if (smokeCooldown == 0)
+        {
+            inSmoke = true;
+            smokeCooldown = 5;
+        }
     }
 }
