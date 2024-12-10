@@ -93,7 +93,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775431420148551913}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f6855b96f2feb614483f272837474b93, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -146,6 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dccb4e8a2b17244bec4d1c42282df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionTimeInSeconds: 5
+  explosionTimeInSeconds: 4
   smokeEffectPrefab: {fileID: 1826205785528295615, guid: 9c7dc7bfad4086942ac1983525973b92,
     type: 3}

@@ -1906,7 +1906,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267729044}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2695,7 +2695,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.19999981, y: 0.49, z: -7.580002}
-  m_LocalScale: {x: 13.922266, y: 5, z: 1}
+  m_LocalScale: {x: 13.922266, y: 3.43665, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1448913309}
@@ -2831,7 +2831,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.2, y: 0.49, z: 9.9}
-  m_LocalScale: {x: 13.922264, y: 5, z: 1}
+  m_LocalScale: {x: 13.922264, y: 3.5906, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1448913309}
@@ -2933,6 +2933,8 @@ MonoBehaviour:
   moveSpeed: 3
   keepDistance: 1
   playerKeepDistance: 4
+  smokeGrenadePrefab: {fileID: 2267294540100696112, guid: 8590b2c679525d942abd7c2967b8a9c5,
+    type: 3}
 --- !u!1 &1868206819
 GameObject:
   m_ObjectHideFlags: 0
@@ -3160,80 +3162,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2827320623366147161
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 230058422509431539, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: f6855b96f2feb614483f272837474b93,
-        type: 2}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383245278902813371, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1775431420148551913, guid: 8590b2c679525d942abd7c2967b8a9c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Smoke Grenade
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8590b2c679525d942abd7c2967b8a9c5, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3247,4 +3175,3 @@ SceneRoots:
   - {fileID: 1696898269}
   - {fileID: 76787983}
   - {fileID: 2105254558}
-  - {fileID: 2827320623366147161}

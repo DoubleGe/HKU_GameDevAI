@@ -8,4 +8,6 @@ public static class VariableNames
     public const string PLAYER_POSITION = "PLAYER_POSITION";
     public const string WEAPON_STORAGE = "WEAPON_STORAGE";
     public const string TARGET_TRANSFORM = "TARGET_TRANSFORM";
+
+    public const string ROGUE_GUARD_POSITION = "ROGUE_GUARD_POSITION";
 }

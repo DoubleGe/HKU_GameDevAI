@@ -16,6 +16,8 @@ public class Rogue : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
 
+    [SerializeField] private SmokeGrenade smokeGrenadePrefab;
+
     //$$TEMP Guard Ref
     private Transform tempGuard;
     private float panicTimer;
@@ -40,12 +42,15 @@ public class Rogue : MonoBehaviour
         tree =
             new BTSelector(
                 new BTSequence(
-                    new BTSearchType<Guard>(transform, VariableNames.TARGET_POSITION, VariableNames.TARGET_TRANSFORM),
+                    new BTSearchType<Guard>(transform, VariableNames.ROGUE_GUARD_POSITION, VariableNames.TARGET_TRANSFORM),
                     new BTFunction(() => panicTimer = 5),
                     new BTRepeatUntil(
                         new BTSequence(
                             new BTFindHidingSpot(transform, 7, tempGuard, VariableNames.TARGET_POSITION),
-                            new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance, .7f)
+                            new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance, .7f),
+                            new BTWait(2),
+                            new BTSearchType<Guard>(transform, VariableNames.ROGUE_GUARD_POSITION, VariableNames.TARGET_TRANSFORM, 10),
+                            new BTThrowObject<SmokeGrenade>(smokeGrenadePrefab, transform, VariableNames.ROGUE_GUARD_POSITION)
                     ), () => panicTimer > 0)
                 ),
                 new BTSequence(
