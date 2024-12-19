@@ -15,7 +15,7 @@ public class Guard : MonoBehaviour, ISmokeable
 
     [SerializeField] private Transform guardHand;
 
-    private bool inSmoke;
+    [SerializeField] private bool inSmoke;
     private float smokeCooldown;
 
     private void Awake()
@@ -36,9 +36,10 @@ public class Guard : MonoBehaviour, ISmokeable
             new BTSelector(
                 new BTConditional(
                     new BTSequence(
+                        new BTFunction(() => agent.isStopped = true),
                         new BTWait(3f),
-                        new BTFunction(() => inSmoke = false),
-                        new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance)
+                        new BTFunction(() => agent.isStopped = false),
+                        new BTFunction(() => inSmoke = false)
                 ), () => inSmoke),
 
                 new BTSequence(
@@ -61,11 +62,10 @@ public class Guard : MonoBehaviour, ISmokeable
                 ),
 
                 new BTRepeatUntil(
-                    //new BTRepeater(wayPoints.Length,
                     new BTSequence(
                         new BTGetNextPatrolPosition(wayPoints),
                         new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance)
-                    )
+                        )
                 , () => !inSmoke)
             );
 
@@ -74,7 +74,7 @@ public class Guard : MonoBehaviour, ISmokeable
 
     private void Update()
     {
-        smokeCooldown = Mathf.Clamp(smokeCooldown - Time.deltaTime, 0, 10);
+        smokeCooldown = Mathf.Max(smokeCooldown - Time.deltaTime, 0);
     }
 
     private void FixedUpdate()
@@ -87,7 +87,7 @@ public class Guard : MonoBehaviour, ISmokeable
         if (smokeCooldown == 0)
         {
             inSmoke = true;
-            smokeCooldown = 5;
+            smokeCooldown = 6;
         }
     }
 }

@@ -12,6 +12,11 @@ public class BTWait : BTBaseNode
         waitTime = waitTimeInSeconds;
     }
 
+    protected override void OnEnter()
+    {
+        waitTime = waitTimeInSeconds;
+    }
+
     protected override void OnExit()
     {
         waitTime = waitTimeInSeconds;
@@ -20,7 +25,7 @@ public class BTWait : BTBaseNode
     protected override TaskStatus OnUpdate()
     {
         waitTime = Mathf.Clamp(waitTime - Time.deltaTime, 0, waitTimeInSeconds);
-        
+ 
         if(waitTime == 0)
         {
             waitTime = waitTimeInSeconds;
