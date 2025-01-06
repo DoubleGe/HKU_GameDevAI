@@ -27,7 +27,6 @@ public class BTThrowObject<T> : BTBaseNode where T : MonoBehaviour
         Rigidbody rb = tempPrefab.GetComponent<Rigidbody>();
 
         Vector3 targetPosition = blackboard.GetVariable<Vector3>(BBtargetPosition);
-        Debug.Log(targetPosition);
 
         Vector3 direction = targetPosition - rb.position;
         float dst = direction.magnitude;

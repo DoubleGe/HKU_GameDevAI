@@ -18,7 +18,9 @@ public abstract class BTBaseNode
         {
             OnEnter();
             wasEntered = true;
+            blackboard.SetVariable<BTBaseNode>(VariableNames.TREE_DEBUG, this);
         }
+
 
         var result = OnUpdate();
         if(result != TaskStatus.Running)

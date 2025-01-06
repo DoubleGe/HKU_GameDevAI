@@ -9,5 +9,7 @@ public static class VariableNames
     public const string WEAPON_STORAGE = "WEAPON_STORAGE";
     public const string TARGET_TRANSFORM = "TARGET_TRANSFORM";
 
+    public const string TREE_DEBUG = "TREE_DEBUG";
+
     public const string ROGUE_GUARD_POSITION = "ROGUE_GUARD_POSITION";
 }

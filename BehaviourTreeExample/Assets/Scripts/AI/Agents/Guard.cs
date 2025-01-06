@@ -36,6 +36,7 @@ public class Guard : MonoBehaviour, ISmokeable
             new BTSelector(
                 new BTConditional(
                     new BTSequence(
+                        new BTVisualLog("In Smoke"),
                         new BTFunction(() => agent.isStopped = true),
                         new BTWait(3f),
                         new BTFunction(() => agent.isStopped = false),
@@ -48,12 +49,15 @@ public class Guard : MonoBehaviour, ISmokeable
                     new BTSelector(
                         new BTConditional(
                             new BTSequence(
+                                new BTVisualLog("Moving to player"),
                                 new BTMoveToPosition(agent, moveSpeed, VariableNames.PLAYER_POSITION, keepDistance),
+                                new BTVisualLog("Attacking player"),
                                 new BTWaitWhile(2, () => Vector3.Distance(blackboard.GetVariable<Transform>(VariableNames.TARGET_TRANSFORM).position, transform.position) <= 1.5f),
                                 new BTAttack(transform, blackboard.GetVariable<Weapon>(VariableNames.WEAPON_STORAGE))
                         ), () => blackboard.ContainsValue<Weapon>(VariableNames.WEAPON_STORAGE)),
 
                         new BTSequence(
+                            new BTVisualLog("Walking to waypoint"),
                             new BTSearchType<Weapon>(transform, VariableNames.TARGET_POSITION, VariableNames.TARGET_TRANSFORM),
                             new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance, .75f),
                             new BTPickupWeapon(guardHand, VariableNames.WEAPON_STORAGE)
@@ -70,6 +74,8 @@ public class Guard : MonoBehaviour, ISmokeable
             );
 
         tree.SetupBlackboard(blackboard);
+
+        if (TryGetComponent<StateDebug>(out StateDebug debug)) debug.SetBlackboard(blackboard);
     }
 
     private void Update()
@@ -83,7 +89,7 @@ public class Guard : MonoBehaviour, ISmokeable
     }
 
     public void SmokeTarget()
-    { 
+    {
         if (smokeCooldown == 0)
         {
             inSmoke = true;

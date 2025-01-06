@@ -59,7 +59,11 @@ public class Rogue : MonoBehaviour
                 )
             );
 
+        blackboard.SetVariable<BTBaseNode>(VariableNames.TREE_DEBUG, tree);
+
         tree.SetupBlackboard(blackboard);
+
+        if (TryGetComponent<StateDebug>(out StateDebug debug)) debug.SetBlackboard(blackboard);
     }
 
     private void Update()
