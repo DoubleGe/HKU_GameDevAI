@@ -57,7 +57,7 @@ public class Guard : MonoBehaviour, ISmokeable
                         ), () => blackboard.ContainsValue<Weapon>(VariableNames.WEAPON_STORAGE)),
 
                         new BTSequence(
-                            new BTVisualLog("Walking to waypoint"),
+                            new BTVisualLog("Walking to weapon"),
                             new BTSearchType<Weapon>(transform, VariableNames.TARGET_POSITION, VariableNames.TARGET_TRANSFORM),
                             new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance, .75f),
                             new BTPickupWeapon(guardHand, VariableNames.WEAPON_STORAGE)
