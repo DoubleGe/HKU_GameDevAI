@@ -9,7 +9,7 @@ public class Doctor : MonoBehaviour
     [SerializeField] private Transform waitPosition;
     [SerializeField] private float moveSpeed = 3;
     [SerializeField] private float keepDistance = 1f;
-    [SerializeField] private float playerKeepDistance = 2f;
+    [SerializeField] private float playerKeepDistance = 4f;
 
     private BTBaseNode tree;
     private NavMeshAgent agent;
@@ -34,8 +34,11 @@ public class Doctor : MonoBehaviour
             new BTSelector(
                 new BTConditional(
                     new BTSequence(
-                        
-                    ), () => false),
+                        new BTGetTargetPosition(player.transform, VariableNames.TARGET_POSITION),
+                        new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, playerKeepDistance),
+                        new BTWait(3),
+                        new BTFunction(() => player.RevivePlayer())
+                ), () => GlobalData.Instance.globalBlackboard.GetVariable<bool>(GlobalVariableNames.PLAYER_IS_DEAD)),
 
                 new BTSequence(
                     new BTVisualLog("Going to "),

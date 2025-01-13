@@ -146,6 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dccb4e8a2b17244bec4d1c42282df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionTimeInSeconds: 4
+  explosionTimeInSeconds: 3
   smokeEffectPrefab: {fileID: 1826205785528295615, guid: 9c7dc7bfad4086942ac1983525973b92,
     type: 3}

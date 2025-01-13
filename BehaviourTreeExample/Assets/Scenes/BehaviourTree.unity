@@ -2517,7 +2517,7 @@ MonoBehaviour:
   Camera: {fileID: 1696898269}
   rotationSpeed: 360
   moveSpeed: 3
-  deathForce: 1500
+  deathForce: 1000
   ragdoll: {fileID: 1392164572}
 --- !u!54 &1267729048
 Rigidbody:

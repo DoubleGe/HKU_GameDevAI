@@ -18,4 +18,5 @@ public static class VariableNames
 public static class GlobalVariableNames
 {
     public const string GUARD_SEES_PLAYER = "GUARD_SEES_PLAYER";
+    public const string PLAYER_IS_DEAD = "PLAYER_IS_DEAD";
 }

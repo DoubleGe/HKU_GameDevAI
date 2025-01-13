@@ -16,7 +16,11 @@ public class Player : MonoBehaviour
     private float hor = 0;
     private Vector3 moveDirection;
     private Collider mainCollider;
-    // Start is called before the first frame update
+
+    private Collider[] ragdollColliders;
+
+    private bool isDead;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -39,13 +43,16 @@ public class Player : MonoBehaviour
         rb.isKinematic = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if(isDead) return;
+
         vert = Input.GetAxis("Vertical");
         hor = Input.GetAxis("Horizontal");
+
         Vector3 forwardDirection = Vector3.Scale(new Vector3(1, 0, 1), Camera.transform.forward);
         Vector3 rightDirection = Vector3.Cross(Vector3.up, forwardDirection.normalized);
+
         moveDirection = forwardDirection.normalized * vert + rightDirection.normalized * hor;
         if (moveDirection != Vector3.zero)
         {
@@ -55,8 +62,6 @@ public class Player : MonoBehaviour
 
         bool isMoving = hor != 0 || vert != 0;
         ChangeAnimation(isMoving ? "Walk Crouch" : "Crouch Idle", isMoving ? 0.05f : 0.15f);
-
-        if (Input.GetKeyDown(KeyCode.M)) RevivePlayer();
     }
 
     private void FixedUpdate()
@@ -67,8 +72,8 @@ public class Player : MonoBehaviour
     public void TakeDamage(GameObject attacker, float damage)
     {
         animator.enabled = false;
-        var cols = GetComponentsInChildren<Collider>();
-        foreach (Collider col in cols)
+        ragdollColliders = GetComponentsInChildren<Collider>();
+        foreach (Collider col in ragdollColliders)
         {
             col.enabled = true;
         }
@@ -79,31 +84,46 @@ public class Player : MonoBehaviour
         {
             rib.isKinematic = false;
             rib.useGravity = true;
+            rib.velocity = Vector3.zero;
+            rib.angularVelocity = Vector3.zero;
             rib.AddForce(Vector3.Scale(new Vector3(1,0.5f,1),(transform.position - attacker.transform.position).normalized * deathForce));
         }
         ragdoll.transform.SetParent(null);
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = true;
 
-        //gameObject.SetActive(false);
+        GlobalData.Instance.globalBlackboard.SetVariable<bool>(GlobalVariableNames.PLAYER_IS_DEAD, true);
+        isDead = true;
     }
 
     public void RevivePlayer()
     {
-        animator.enabled = true;
-        var cols = GetComponentsInChildren<Collider>();
-        foreach (Collider col in cols)
-        {
-            col.enabled = false;
-        }
-        mainCollider.enabled = true;
-
         var rigidBodies = GetComponentsInChildren<Rigidbody>();
         foreach (Rigidbody rib in rigidBodies)
         {
             rib.isKinematic = true;
             rib.useGravity = false;
+            rib.velocity = Vector3.zero;
+            rib.angularVelocity = Vector3.zero;
         }
+
+        rb.isKinematic = false;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        animator.enabled = true;
+        foreach (Collider col in ragdollColliders)
+        {
+            col.enabled = false;
+        }
+        mainCollider.enabled = true;
+
         ragdoll.transform.SetParent(transform);
         ragdoll.transform.localPosition = Vector3.zero;
+        ragdoll.transform.localRotation = Quaternion.identity;
+
+        GlobalData.Instance.globalBlackboard.SetVariable<bool>(GlobalVariableNames.PLAYER_IS_DEAD, false);
+        isDead = false;
     }
 
     private void GetComponentsRecursively<T>(GameObject obj, ref List<T> components)
