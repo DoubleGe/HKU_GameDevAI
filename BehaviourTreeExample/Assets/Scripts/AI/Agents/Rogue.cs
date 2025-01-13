@@ -20,7 +20,6 @@ public class Rogue : MonoBehaviour
 
     //$$TEMP Guard Ref
     private Transform tempGuard;
-    private float panicTimer;
 
     private void Awake()
     {
@@ -38,22 +37,22 @@ public class Rogue : MonoBehaviour
         blackboard.SetVariable(VariableNames.ENEMY_HEALTH, 100);
         blackboard.SetVariable(VariableNames.TARGET_POSITION, new Vector3(0, 0, 0));
         blackboard.SetVariable(VariableNames.CURRENT_PATROL_INDEX, -1);
+        blackboard.SetVariable<string>(VariableNames.TREE_DEBUG, "");
 
         tree =
             new BTSelector(
                 new BTSequence(
                     new BTSearchType<Guard>(transform, VariableNames.ROGUE_GUARD_POSITION, VariableNames.TARGET_TRANSFORM),
-                    new BTFunction(() => panicTimer = 5),
                     new BTRepeatUntil(
                         new BTSequence(
-                            new BTVisualLog("Searcing for hiding spot"),
+                            new BTVisualLog("Going to hiding spot"),
                             new BTFindHidingSpot(transform, 7, tempGuard, VariableNames.TARGET_POSITION),
                             new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance, .7f),
                             new BTWait(2),
                             new BTSearchType<Guard>(transform, VariableNames.ROGUE_GUARD_POSITION, VariableNames.TARGET_TRANSFORM, 10),
                             new BTVisualLog("Throw Grenade"),
                             new BTThrowObject<SmokeGrenade>(smokeGrenadePrefab, transform, VariableNames.ROGUE_GUARD_POSITION)
-                    ), () => panicTimer > 0)
+                    ), () => GlobalData.Instance.globalBlackboard.GetVariable<bool>(GlobalVariableNames.GUARD_SEES_PLAYER))
                 ),
                 new BTSequence(
                     new BTVisualLog("Going to player"),
@@ -67,11 +66,6 @@ public class Rogue : MonoBehaviour
         tree.SetupBlackboard(blackboard);
 
         if (TryGetComponent<StateDebug>(out StateDebug debug)) debug.SetBlackboard(blackboard);
-    }
-
-    private void Update()
-    {
-        panicTimer = Mathf.Max(panicTimer - Time.deltaTime, 0);
     }
 
     private void FixedUpdate()

@@ -13,7 +13,7 @@ public class BTVisualLog : BTBaseNode
 
     protected override void OnEnter()
     {
-        blackboard.SetVariable<string>(logText, VariableNames.TREE_DEBUG);
+        blackboard.SetVariable<string>(VariableNames.TREE_DEBUG, logText);
     }
 
     protected override TaskStatus OnUpdate()

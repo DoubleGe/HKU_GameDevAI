@@ -13,3 +13,8 @@ public static class VariableNames
 
     public const string ROGUE_GUARD_POSITION = "ROGUE_GUARD_POSITION";
 }
+
+public static class GlobalVariableNames
+{
+    public const string GUARD_SEES_PLAYER = "GUARD_SEES_PLAYER";
+}

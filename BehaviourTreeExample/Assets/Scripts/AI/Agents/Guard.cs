@@ -31,6 +31,7 @@ public class Guard : MonoBehaviour, ISmokeable
         blackboard.SetVariable(VariableNames.TARGET_POSITION, new Vector3(0, 0, 0));
         blackboard.SetVariable(VariableNames.CURRENT_PATROL_INDEX, -1);
         blackboard.SetVariable<Transform>(VariableNames.TARGET_TRANSFORM, null);
+        blackboard.SetVariable<string>(VariableNames.TREE_DEBUG, "");
 
         tree =
             new BTSelector(
@@ -46,6 +47,7 @@ public class Guard : MonoBehaviour, ISmokeable
                 new BTSequence(
                     new BTSearchType<Player>(transform, VariableNames.PLAYER_POSITION, VariableNames.TARGET_TRANSFORM),
                     new BTIsInSight(VariableNames.TARGET_TRANSFORM, transform, 130),
+                     new BTFunction(() => GlobalData.Instance.GuardSeesPlayer(this)),
                     new BTSelector(
                         new BTConditional(
                             new BTSequence(
@@ -67,6 +69,8 @@ public class Guard : MonoBehaviour, ISmokeable
 
                 new BTRepeatUntil(
                     new BTSequence(
+                        new BTVisualLog("Walking to waypoint"),
+                        new BTFunction(() => GlobalData.Instance.GuardLostPlayer(this)),
                         new BTGetNextPatrolPosition(wayPoints),
                         new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance)
                         )

@@ -18,7 +18,6 @@ public abstract class BTBaseNode
         {
             OnEnter();
             wasEntered = true;
-            blackboard.SetVariable<BTBaseNode>(VariableNames.TREE_DEBUG, this);
         }
 
 
