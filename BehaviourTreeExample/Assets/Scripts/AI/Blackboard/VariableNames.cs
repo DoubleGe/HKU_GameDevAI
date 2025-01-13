@@ -12,6 +12,7 @@ public static class VariableNames
     public const string TREE_DEBUG = "TREE_DEBUG";
 
     public const string ROGUE_GUARD_POSITION = "ROGUE_GUARD_POSITION";
+    public const string ROGUE_GRENADE_COUNT = "ROGUE_GRENADE_COUNT";
 }
 
 public static class GlobalVariableNames

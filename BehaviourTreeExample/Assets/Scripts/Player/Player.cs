@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -54,6 +55,8 @@ public class Player : MonoBehaviour
 
         bool isMoving = hor != 0 || vert != 0;
         ChangeAnimation(isMoving ? "Walk Crouch" : "Crouch Idle", isMoving ? 0.05f : 0.15f);
+
+        if (Input.GetKeyDown(KeyCode.M)) RevivePlayer();
     }
 
     private void FixedUpdate()
@@ -80,7 +83,27 @@ public class Player : MonoBehaviour
         }
         ragdoll.transform.SetParent(null);
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+    }
+
+    public void RevivePlayer()
+    {
+        animator.enabled = true;
+        var cols = GetComponentsInChildren<Collider>();
+        foreach (Collider col in cols)
+        {
+            col.enabled = false;
+        }
+        mainCollider.enabled = true;
+
+        var rigidBodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rib in rigidBodies)
+        {
+            rib.isKinematic = true;
+            rib.useGravity = false;
+        }
+        ragdoll.transform.SetParent(transform);
+        ragdoll.transform.localPosition = Vector3.zero;
     }
 
     private void GetComponentsRecursively<T>(GameObject obj, ref List<T> components)

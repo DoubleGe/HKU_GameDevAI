@@ -36,13 +36,23 @@ public class Rogue : MonoBehaviour
         Blackboard blackboard = new Blackboard();
         blackboard.SetVariable(VariableNames.ENEMY_HEALTH, 100);
         blackboard.SetVariable(VariableNames.TARGET_POSITION, new Vector3(0, 0, 0));
-        blackboard.SetVariable(VariableNames.CURRENT_PATROL_INDEX, -1);
         blackboard.SetVariable<string>(VariableNames.TREE_DEBUG, "");
+        blackboard.SetVariable<int>(VariableNames.ROGUE_GRENADE_COUNT, 3);
 
         tree =
             new BTSelector(
+                new BTConditional(
+                    new BTSequence(
+                        new BTVisualLog("Getting new Grenades"),
+                        new BTSearchType<GrenadeCrate>(transform, VariableNames.TARGET_POSITION, VariableNames.TARGET_TRANSFORM, 50),
+                        new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, 2),
+                        new BTVisualLog("Grabbing new Grenades"),
+                        new BTWait(2),
+                        new BTFunction(() => blackboard.SetVariable<int>(VariableNames.ROGUE_GRENADE_COUNT, 3))
+                    ), () => blackboard.GetVariable<int>(VariableNames.ROGUE_GRENADE_COUNT) <= 0),
+
                 new BTSequence(
-                    new BTSearchType<Guard>(transform, VariableNames.ROGUE_GUARD_POSITION, VariableNames.TARGET_TRANSFORM),
+                    //new BTSearchType<Guard>(transform, VariableNames.ROGUE_GUARD_POSITION, VariableNames.TARGET_TRANSFORM),
                     new BTRepeatUntil(
                         new BTSequence(
                             new BTVisualLog("Going to hiding spot"),
@@ -51,7 +61,8 @@ public class Rogue : MonoBehaviour
                             new BTWait(2),
                             new BTSearchType<Guard>(transform, VariableNames.ROGUE_GUARD_POSITION, VariableNames.TARGET_TRANSFORM, 10),
                             new BTVisualLog("Throw Grenade"),
-                            new BTThrowObject<SmokeGrenade>(smokeGrenadePrefab, transform, VariableNames.ROGUE_GUARD_POSITION)
+                            new BTThrowObject<SmokeGrenade>(smokeGrenadePrefab, transform, VariableNames.ROGUE_GUARD_POSITION),
+                            new BTFunction(() => blackboard.SetVariable<int>(VariableNames.ROGUE_GRENADE_COUNT, blackboard.GetVariable<int>(VariableNames.ROGUE_GRENADE_COUNT) - 1))
                     ), () => GlobalData.Instance.globalBlackboard.GetVariable<bool>(GlobalVariableNames.GUARD_SEES_PLAYER))
                 ),
                 new BTSequence(
