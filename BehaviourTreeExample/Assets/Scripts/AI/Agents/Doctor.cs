@@ -34,14 +34,16 @@ public class Doctor : MonoBehaviour
             new BTSelector(
                 new BTConditional(
                     new BTSequence(
+                        new BTVisualLog("Moving to player"),
                         new BTGetTargetPosition(player.transform, VariableNames.TARGET_POSITION),
                         new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, playerKeepDistance),
+                        new BTVisualLog("Reviving player"),
                         new BTWait(3),
                         new BTFunction(() => player.RevivePlayer())
                 ), () => GlobalData.Instance.globalBlackboard.GetVariable<bool>(GlobalVariableNames.PLAYER_IS_DEAD)),
 
                 new BTSequence(
-                    new BTVisualLog("Going to "),
+                    new BTVisualLog("Going to base"),
                     new BTGetTargetPosition(waitPosition, VariableNames.TARGET_POSITION),
                     new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, playerKeepDistance)
                 )
