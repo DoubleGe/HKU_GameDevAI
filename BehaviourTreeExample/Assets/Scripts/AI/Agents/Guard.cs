@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -58,11 +57,13 @@ public class Guard : MonoBehaviour, ISmokeable
                                 new BTAttack(transform, blackboard.GetVariable<Weapon>(VariableNames.WEAPON_STORAGE))
                         ), () => blackboard.ContainsValue<Weapon>(VariableNames.WEAPON_STORAGE)),
 
-                        new BTSequence(
-                            new BTVisualLog("Walking to weapon"),
-                            new BTSearchType<Weapon>(transform, VariableNames.TARGET_POSITION, VariableNames.TARGET_TRANSFORM),
-                            new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance, .75f),
-                            new BTPickupWeapon(guardHand, VariableNames.WEAPON_STORAGE)
+                        new BTConditional(
+                            new BTSequence(
+                                new BTVisualLog("Walking to weapon"),
+                                new BTSearchType<Weapon>(transform, VariableNames.TARGET_POSITION, VariableNames.TARGET_TRANSFORM),
+                                new BTMoveToPosition(agent, moveSpeed, VariableNames.TARGET_POSITION, keepDistance, .75f),
+                                new BTPickupWeapon(guardHand, VariableNames.WEAPON_STORAGE)
+                            ), () => !blackboard.ContainsValue<Weapon>(VariableNames.WEAPON_STORAGE)
                         )
                     )
                 ),
